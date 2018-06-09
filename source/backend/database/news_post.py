@@ -44,10 +44,23 @@ class NewsPost:
         json_obj = json.loads(json_str)
         return NewsPost(
             json_obj['title'],
+            json_obj['content'],
             dt.strptime(json_obj['created_date'], DATE_FORMAT),
             json_obj['company_name'],
-            json_obj['address'],
-            json_obj['content']
+            json_obj['address']
+        )
+
+    """
+    Returns a new NewsPost object as loaded from an sqlite3 result row.
+    """
+    @staticmethod
+    def from_sqlite3_row(row):
+        return NewsPost(
+            row[1],
+            row[2],
+            dt.strptime(row[3], DATE_FORMAT),
+            row[4],
+            row[5]
         )
 
     """

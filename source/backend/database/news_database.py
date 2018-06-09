@@ -74,17 +74,32 @@ class NewsDatabase:
                       address) VALUES (?, ?, ?, ?, ?);''',
                 posts
             )
+            self.db_conn.commit()
         except Exception as err:
             print('Query failed while trying to insert many posts: %s, \nError: %s' % posts, err)
 
     """
     Retrieves a list of the first 'count' posts that contain the given keywords, if they are provided.
     """
-    def retrieve_posts(self, count, keywords):
-        
+    def retrieve_posts(self):
+        try:
+            self.cursor.execute(
+                '''SELECT *
+                   FROM news_posts 
+                   ORDER BY DATETIME(created_date) DESC;'''
+            )
+            posts = []
+            for row in self.cursor.fetchall():
+                posts.append(news_post.NewsPost.from_sqlite3_row(row))
+            return posts
+        except Exception as err:
+            print('Query failed while trying to retrieve posts. Error: ', err)
 
 
 db = NewsDatabase()
-test_post = news_post.NewsPost('test_title', 'test_content', datetime.now(), 'test_company', 'test_address')
-print(test_post)
-db.store_news_post(test_post)
+# test_post = news_post.NewsPost('test_title', 'test_content', datetime.now(), 'test_company', 'test_address')
+# print(test_post)
+# db.store_news_post(test_post)
+results = db.retrieve_posts(100)
+for post in results:
+    print(post)
