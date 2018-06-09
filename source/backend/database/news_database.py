@@ -1,7 +1,5 @@
 import sqlite3
-
 from source.backend.database import news_post
-from datetime import datetime
 
 """
 Database Connection.
@@ -94,12 +92,3 @@ class NewsDatabase:
             return posts
         except Exception as err:
             print('Query failed while trying to retrieve posts. Error: ', err)
-
-
-# db = NewsDatabase()
-# # test_post = news_post.NewsPost('test_title', 'test_content', datetime.now(), 'test_company', 'test_address')
-# # print(test_post)
-# # db.store_news_post(test_post)
-# results = db.retrieve_posts()
-# for post in results:
-#     print(post)

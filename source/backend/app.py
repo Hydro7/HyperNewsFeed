@@ -1,21 +1,9 @@
 from flask import Flask
-from flask_restful import Resource, Api
-from source.backend.database.news_database import NewsDatabase
+from flask_restful import Api
+from source.backend.endpoints.news_posts_resource import NewsPosts
 
 app = Flask(__name__)
 api = Api(app)
-
-db = NewsDatabase('database/news_database.db')
-
-
-class NewsPosts(Resource):
-    def get(self):
-        posts = db.retrieve_posts()
-        post_json = []
-        for post in posts:
-            post_json.append(post.to_json())
-        return post_json
-
 
 api.add_resource(NewsPosts, '/newsposts')
 
