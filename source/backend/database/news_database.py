@@ -60,6 +60,28 @@ class NewsDatabase:
         except Exception as err:
             print('Query failed while trying to insert news post: %s, \nError: %s' % news_post_obj, err)
 
+    """
+    Stores a list of news post objects.
+    """
+    def store_many_news_posts(self, posts):
+        try:
+            self.cursor.executemany(
+                '''INSERT INTO news_posts(
+                      title,
+                      content,
+                      created_date,
+                      company_name,
+                      address) VALUES (?, ?, ?, ?, ?);''',
+                posts
+            )
+        except Exception as err:
+            print('Query failed while trying to insert many posts: %s, \nError: %s' % posts, err)
+
+    """
+    Retrieves a list of the first 'count' posts that contain the given keywords, if they are provided.
+    """
+    def retrieve_posts(self, count, keywords):
+        
 
 
 db = NewsDatabase()
