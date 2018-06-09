@@ -105,3 +105,6 @@ venv.bak/
 
 #jetbrains metadata
 .idea/
+
+#databases
+*.db

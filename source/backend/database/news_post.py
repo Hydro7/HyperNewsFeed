@@ -1,3 +1,4 @@
+from datetime import datetime as dt
 import json
 
 """
@@ -7,28 +8,50 @@ Represents a single news source, with some fields that can be initialized to
 default values.
 """
 
+DATE_FORMAT = '%Y-%m-%d %H-%M-%S'
+
 
 class NewsPost:
 
     """
     Initialize the news post with all fields needed to complete the object.
     """
-    def __init__(self, title, created_date, company_name, address, html_content):
+    def __init__(self, title, content, created_date, company_name, address):
         self.title = title
         self.created_date = created_date
         self.company_name = company_name
         self.address = address
-        self.html_content = html_content
+        self.content = content
 
     """
     Returns a json object representing a news post.
     """
     def to_json(self):
-        return json.dumps(self)
+        json_obj = {
+            'title':        self.title,
+            'content':      self.content,
+            'created_date': self.created_date.strftime(DATE_FORMAT),
+            'company_name': self.company_name,
+            'address':      self.address
+        }
+        return json.dumps(json_obj)
 
     """
     Returns a new NewsPost object loaded from a json object.
     """
     @staticmethod
-    def from_json(json_obj):
-        print(json_obj)
+    def from_json(json_str):
+        json_obj = json.loads(json_str)
+        return NewsPost(
+            json_obj['title'],
+            dt.strptime(json_obj['created_date'], DATE_FORMAT),
+            json_obj['company_name'],
+            json_obj['address'],
+            json_obj['content']
+        )
+
+    """
+    Prints the content of the news post.
+    """
+    def __str__(self):
+        return 'News Post: {\n\tTitle: ' + self.title + '\n\tCreated Date: ' + str(self.created_date) + '\n\tAddress: ' + self.address + '\n\tCompany Name: ' + self.company_name + '\n\tContent: ' + self.content + '\n}\n'
