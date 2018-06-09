@@ -14,8 +14,7 @@ install:
     - pip install pipenv
     - export FLASK_APP=app.py
     - export FLASK_ENV=development
-    - pipenv install --dev
-    - cd ..
+    - cd ../../
 
 script:
     - cd source/backend
