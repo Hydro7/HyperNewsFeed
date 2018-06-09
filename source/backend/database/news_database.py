@@ -28,7 +28,7 @@ class NewsDatabase:
                   id INTEGER PRIMARY KEY AUTOINCREMENT,
                   title TEXT DEFAULT NULL,
                   content TEXT DEFAULT NULL,
-                  created_date DATETIME DEFAULT (STRFTIME('%Y-%m-%d %H-%M-%S', 'NOW')),
+                  created_date DATETIME DEFAULT NULL,
                   company_name TEXT DEFAULT NULL,
                   address TEXT DEFAULT NULL);'''
         )
