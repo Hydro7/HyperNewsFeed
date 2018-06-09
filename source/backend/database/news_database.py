@@ -90,6 +90,32 @@ class NewsDatabase:
             print('Query failed while trying to retrieve posts. Error: ', err)
 
     """
+    Returns a list of results, after filtering by a keyword.
+    """
+    def search_posts(self, keyword):
+        try:
+            keyword_ = '%' + keyword + '%'
+            self.cursor.execute(
+                '''SELECT *
+                   FROM news_posts 
+                   WHERE (title LIKE ? OR company_name LIKE ? OR content LIKE ?) 
+                   ORDER BY id DESC;''',
+                (
+                    keyword_,
+                    keyword_,
+                    keyword_
+                )
+            )
+            posts = []
+            row = self.cursor.fetchone()
+            while row:
+                posts.append(news_post.NewsPost.from_sqlite3_row(row))
+                row = self.cursor.fetchone()
+            return posts
+        except Exception as err:
+            print('Query failed while trying to retrieve posts with keyword ', keyword, ', Error: ', err)
+
+    """
     Deletes all the posts in the database.
     """
     def delete_posts(self):
