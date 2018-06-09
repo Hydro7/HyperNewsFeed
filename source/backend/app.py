@@ -9,17 +9,18 @@ from database.news_post import NewsPost
 app = Flask(__name__)
 api = Api(app)
 
-db = NewsDatabase('database/prod.db')
-
-db.store_news_post(NewsPost('test_title', 'test_content', datetime.now(), 'test_company', 'test_address'))
 
 class NewsPosts(Resource):
 
     def get(self):
+        db = NewsDatabase('database/prod.db')
         lst = []
-        for post in db.retrieve_posts():
-            lst.append(post.to_json())
-        return lst
+        this = db.retrieve_posts()
+        if this:
+            for post in this:
+                lst.append(post.to_json())
+            db.db_conn.close()
+            return lst
 
 
 api.add_resource(NewsPosts, '/')
