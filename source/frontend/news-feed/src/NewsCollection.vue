@@ -2,13 +2,13 @@
   <article class="media">
   <figure class="media-left">
     <p class="image is-64x64">
-      <img src="https://bulma.io/images/placeholders/128x128.png">
+      <img src="src/assets/n.png">
     </p>
   </figure>
   <div class="media-content">
     <div class="content">
       <p>
-        <strong>News Title Here</strong> <small>Date here</small>
+        <strong>News Title Here</strong> <small>{{getDate}}</small>
         <br>
         {{getNews}}
       </p>
@@ -39,6 +39,9 @@ export default {
   computed: {
     getNews() {
       return this.newsData.content;
+    },
+    getDate() {
+      return this.newsData.created_date;
     }
   }
 }
