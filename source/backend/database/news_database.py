@@ -30,9 +30,16 @@ class NewsDatabase:
                   content TEXT DEFAULT NULL,
                   created_date DATETIME DEFAULT NULL,
                   company_name TEXT DEFAULT NULL,
-                  address TEXT DEFAULT NULL);'''
+                  address TEXT DEFAULT NULL,
+                  hash TEXT DEFAULT NULL UNIQUE);'''
         )
         print('Tables initialized.')
+
+    """
+    Closes the database connection.
+    """
+    def close(self):
+        self.db_conn.close()
 
     """
     Stores a news post into the database.
@@ -45,13 +52,15 @@ class NewsDatabase:
                       content,
                       created_date,
                       company_name,
-                      address) VALUES (?, ?, ?, ?, ?);''',
+                      address,
+                      hash) VALUES (?, ?, ?, ?, ?, ?);''',
                 (
                     news_post_obj.title,
                     news_post_obj.content,
                     news_post_obj.created_date.strftime(news_post.DATE_FORMAT),
                     news_post_obj.company_name,
-                    news_post_obj.address
+                    news_post_obj.address,
+                    news_post_obj.create_hash()
                 )
             )
             self.db_conn.commit()
@@ -84,7 +93,7 @@ class NewsDatabase:
             self.cursor.execute(
                 '''SELECT *
                    FROM news_posts 
-                   ORDER BY DATETIME(created_date) DESC;'''
+                   ORDER BY DATETIME(created_date) ASC;'''
             )
             posts = []
             row = self.cursor.fetchone()
@@ -94,3 +103,14 @@ class NewsDatabase:
             return posts
         except Exception as err:
             print('Query failed while trying to retrieve posts. Error: ', err)
+
+    """
+    Deletes all the posts in the database.
+    """
+    def delete_posts(self):
+        try:
+            self.cursor.execute(
+                '''DELETE FROM news_posts;'''
+            )
+        except Exception as err:
+            print('Query failed while trying to delete posts. Error: ', err)

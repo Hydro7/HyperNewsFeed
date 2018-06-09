@@ -1,10 +1,7 @@
-from datetime import datetime
-
 from flask import Flask
 from flask_restful import Api, Resource
 
 from database.news_database import NewsDatabase
-from database.news_post import NewsPost
 
 app = Flask(__name__)
 api = Api(app)
@@ -15,12 +12,15 @@ class NewsPosts(Resource):
     def get(self):
         db = NewsDatabase('database/prod.db')
         lst = []
-        this = db.retrieve_posts()
-        if this:
-            for post in this:
-                lst.append(post.to_json())
-            db.db_conn.close()
-            return lst
+        for post in db.retrieve_posts():
+            lst.append(post.to_json())
+        db.close()
+        return lst
+
+    def delete(self):
+        db = NewsDatabase('database/prod.db')
+        db.delete_posts()
+        db.close()
 
 
 api.add_resource(NewsPosts, '/')
