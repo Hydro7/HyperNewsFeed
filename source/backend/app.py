@@ -23,7 +23,20 @@ class NewsPosts(Resource):
         db.close()
 
 
+class SearchPosts(Resource):
+
+    def get(self, keyword):
+        db = NewsDatabase('database/prod.db')
+        lst = []
+        for post in db.search_posts(keyword):
+            lst.append(post.to_json())
+        db.close()
+        return lst
+
+
 api.add_resource(NewsPosts, '/')
+api.add_resource(SearchPosts, '/search/<keyword>', endpoint='search')
+
 
 
 if __name__ == '__main__':
