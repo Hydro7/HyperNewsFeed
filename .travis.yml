@@ -1,0 +1,21 @@
+sudo: false
+language: python
+python:
+    - "3.5"
+
+#branches:
+#    only:
+#        - master
+#        - develop
+
+install:
+    - pip install reqruiments.txt
+    
+script:
+    - python source/backend/app.py
+    
+after_failure:
+    echo "Broken."
+
+after_script:
+    echo "Cleanup."
