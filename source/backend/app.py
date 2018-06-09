@@ -1,25 +1,26 @@
-from datetime import datetime
-
 from flask import Flask
 from flask_restful import Api, Resource
 
 from database.news_database import NewsDatabase
-from database.news_post import NewsPost
 
 app = Flask(__name__)
 api = Api(app)
 
-db = NewsDatabase('database/prod.db')
-
-db.store_news_post(NewsPost('test_title', 'test_content', datetime.now(), 'test_company', 'test_address'))
 
 class NewsPosts(Resource):
 
     def get(self):
+        db = NewsDatabase('database/prod.db')
         lst = []
         for post in db.retrieve_posts():
             lst.append(post.to_json())
+        db.close()
         return lst
+
+    def delete(self):
+        db = NewsDatabase('database/prod.db')
+        db.delete_posts()
+        db.close()
 
 
 api.add_resource(NewsPosts, '/')
