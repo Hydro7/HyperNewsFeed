@@ -70,6 +70,7 @@ class NewsPost:
     def __str__(self):
         return 'News Post: {\n\tTitle: ' + self.title + '\n\tCreated Date: ' + str(self.created_date) + '\n\tAddress: ' + self.address + '\n\tCompany Name: ' + self.company_name + '\n\tContent: ' + self.content + '\n}\n'
 
-    def create_hash(self, input_string):
-        return hashlib.md5(input_string.encode('utf-8')).hexdigest()
+
+    def create_hash(self):
+        return hashlib.md5(self.content.encode('utf-8')).hexdigest()
 

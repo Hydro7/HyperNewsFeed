@@ -35,6 +35,7 @@ def article_crawler(url, company, address):
                     max1 = size
                     paragraph = p.text
         if paragraph != 0:
+            print(paragraph)
             np = NewsPost('blah', paragraph, datetime.now(), company, address)
             db.store_news_post(np)
             print('Saved news post.')
