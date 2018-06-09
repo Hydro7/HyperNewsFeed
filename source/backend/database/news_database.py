@@ -87,12 +87,10 @@ class NewsDatabase:
                    ORDER BY DATETIME(created_date) DESC;'''
             )
             posts = []
-            rows = self.cursor.fetchall()
-            if rows == None:
-                return []
-            for row in self.cursor.fetchall():
-                print(row)
+            row = self.cursor.fetchone()
+            while row:
                 posts.append(news_post.NewsPost.from_sqlite3_row(row))
+                row = self.cursor.fetchone()
             return posts
         except Exception as err:
             print('Query failed while trying to retrieve posts. Error: ', err)
