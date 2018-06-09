@@ -11,8 +11,12 @@ python:
 install:
     - pip install -r source/backend/requirements.txt
     
+before_script:
+    - export FLASK_APP="$TRAVIS_BUILD_DIR/autoapp.py"
+    - export FLASK_DEBUG=1
+
 script:
-    - python source/backend/app.py
+    - flask test
     
 after_failure:
     echo "Broken."
