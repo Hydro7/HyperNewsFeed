@@ -1,21 +1,25 @@
 from bs4 import BeautifulSoup
 import urllib.request
+from database.news_post import NewsPost
+from database.news_database import NewsDatabase
 
-def url_crawler(url):
+db = NewsDatabase()
+
+def url_crawler(url, company, address):
     try:
-        res = urllib.request.urlopen(url)
+        res = urllib.request.urlopen(url, )
         soup = BeautifulSoup(res.read(), "html.parser")
         for a in soup.findAll('a'):
             l = a.get('href')
             #print(l)
             if(l):
                 if('nieuws' in l or 'Nieuws' in l or 'news' in l or 'News' in l):
-                    article_crawler(l)
+                    article_crawler(l, company, address)
     except:
         pass
 
 
-def article_crawler(url):
+def article_crawler(url, company, address):
     try:
         res = urllib.request.urlopen(url)
         soup = BeautifulSoup(res.read(), "html.parser")
@@ -28,8 +32,11 @@ def article_crawler(url):
                 if size > max1:
                     max1 = size
                     paragraph = p.text
-        print(paragraph)
-        print()
+        if paragraph != 0:
+            print(paragraph)
+            print()
+            np = NewsPost("", paragraph, "", company, address)
+            db.store_news_post(np)
     except:
         pass
 
