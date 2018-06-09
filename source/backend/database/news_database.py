@@ -1,5 +1,5 @@
 import sqlite3
-from source.backend.database import news_post
+from database import news_post
 
 """
 Database Connection.
@@ -14,7 +14,7 @@ class NewsDatabase:
     Initializes the NewsDatabase object, and performs setup operations of the database,
     such as opening the db connection and creating tables if needed.
     """
-    def __init__(self, db_filename='news_database.db'):
+    def __init__(self, db_filename='database/news_database.db'):
         self.db_conn = sqlite3.connect(db_filename, 3.0)
         self.cursor = self.db_conn.cursor()
         self.initialize_tables()
@@ -28,7 +28,7 @@ class NewsDatabase:
                   id INTEGER PRIMARY KEY AUTOINCREMENT,
                   title TEXT DEFAULT NULL,
                   content TEXT DEFAULT NULL,
-                  created_date DATETIME DEFAULT (STRFTIME('%Y-%m-%d %H-%M-%S', 'NOW')),
+                  created_date DATETIME DEFAULT NULL,
                   company_name TEXT DEFAULT NULL,
                   address TEXT DEFAULT NULL);'''
         )
@@ -87,7 +87,11 @@ class NewsDatabase:
                    ORDER BY DATETIME(created_date) DESC;'''
             )
             posts = []
+            rows = self.cursor.fetchall()
+            if rows == None:
+                return []
             for row in self.cursor.fetchall():
+                print(row)
                 posts.append(news_post.NewsPost.from_sqlite3_row(row))
             return posts
         except Exception as err:

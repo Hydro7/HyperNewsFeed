@@ -1,5 +1,5 @@
 from flask_restful import Resource
-from source.backend.database.news_database import NewsDatabase
+from database.news_database import NewsDatabase
 
 
 class NewsPosts(Resource):

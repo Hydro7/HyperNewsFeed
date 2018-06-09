@@ -1,14 +1,17 @@
+from datetime import datetime
+
 from flask import Flask
 from flask_restful import Api, Resource
 
-from source.backend.database.news_database import NewsDatabase
-from source.backend.endpoints.news_posts_resource import NewsPosts
+from database.news_database import NewsDatabase
+from database.news_post import NewsPost
 
 app = Flask(__name__)
 api = Api(app)
 
 db = NewsDatabase('database/news_database.db')
 
+db.store_news_post(NewsPost('test_title', 'test_content', datetime.now(), 'test_company', 'test_address'))
 
 class NewsPosts(Resource):
 
