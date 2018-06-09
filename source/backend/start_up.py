@@ -8,8 +8,8 @@ def start():
         if i.subdomain:
             sub = i.subdomain + "."
         if i.SSL_certificate == "Yes":
-            url_crawler("https://" + sub + i.domain, i.company_name, i.address)
+            url_crawler("https://" + sub + i.domain, i.company_name, i.address, i.logo)
         else:
-            url_crawler("http://" + sub + i.domain, i.company_name, i.address)
+            url_crawler("http://" + sub + i.domain, i.company_name, i.address, i.logo)
 
 start()
