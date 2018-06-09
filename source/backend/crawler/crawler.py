@@ -7,6 +7,7 @@ from database.news_database import NewsDatabase
 
 db = NewsDatabase('database/prod.db')
 
+
 def url_crawler(url, company, address):
     try:
         res = urllib.request.urlopen(url, )
