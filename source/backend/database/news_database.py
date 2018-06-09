@@ -1,7 +1,5 @@
 import sqlite3
-
 from source.backend.database import news_post
-from datetime import datetime
 
 """
 Database Connection.
@@ -16,8 +14,8 @@ class NewsDatabase:
     Initializes the NewsDatabase object, and performs setup operations of the database,
     such as opening the db connection and creating tables if needed.
     """
-    def __init__(self):
-        self.db_conn = sqlite3.connect('news_database.db', 3.0)
+    def __init__(self, db_filename='news_database.db'):
+        self.db_conn = sqlite3.connect(db_filename, 3.0)
         self.cursor = self.db_conn.cursor()
         self.initialize_tables()
 
@@ -94,12 +92,3 @@ class NewsDatabase:
             return posts
         except Exception as err:
             print('Query failed while trying to retrieve posts. Error: ', err)
-
-
-db = NewsDatabase()
-# test_post = news_post.NewsPost('test_title', 'test_content', datetime.now(), 'test_company', 'test_address')
-# print(test_post)
-# db.store_news_post(test_post)
-results = db.retrieve_posts(100)
-for post in results:
-    print(post)

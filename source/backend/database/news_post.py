@@ -34,7 +34,7 @@ class NewsPost:
             'company_name': self.company_name,
             'address':      self.address
         }
-        return json.dumps(json_obj)
+        return json_obj
 
     """
     Returns a new NewsPost object loaded from a json object.
