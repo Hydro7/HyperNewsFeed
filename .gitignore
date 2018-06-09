@@ -104,6 +104,11 @@ venv.bak/
 # mypy
 .mypy_cache/
 
+#jetbrains metadata
+.idea/
+
+#databases
+*.db
 
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and WebStorm
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
