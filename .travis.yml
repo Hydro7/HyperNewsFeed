@@ -9,7 +9,7 @@ python:
 #        - develop
 
 install:
-    - pip install -r source/backend/reqruiments.txt
+    - pip install -r source/backend/requirements.txt
     
 script:
     - python source/backend/app.py
