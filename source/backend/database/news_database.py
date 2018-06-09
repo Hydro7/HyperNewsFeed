@@ -93,7 +93,7 @@ class NewsDatabase:
             self.cursor.execute(
                 '''SELECT *
                    FROM news_posts 
-                   ORDER BY DATETIME(created_date) ASC;'''
+                   ORDER BY id DESC;'''
             )
             posts = []
             row = self.cursor.fetchone()
