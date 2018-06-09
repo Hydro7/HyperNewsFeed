@@ -9,7 +9,7 @@ from database.news_post import NewsPost
 app = Flask(__name__)
 api = Api(app)
 
-db = NewsDatabase('database/news_database.db')
+db = NewsDatabase('database/prod.db')
 
 db.store_news_post(NewsPost('test_title', 'test_content', datetime.now(), 'test_company', 'test_address'))
 
