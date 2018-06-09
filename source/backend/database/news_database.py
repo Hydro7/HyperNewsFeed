@@ -31,6 +31,7 @@ class NewsDatabase:
                   created_date DATETIME DEFAULT NULL,
                   company_name TEXT DEFAULT NULL,
                   address TEXT DEFAULT NULL,
+                  icon_url TEXT DEFAULT NULL,
                   hash TEXT DEFAULT NULL UNIQUE);'''
         )
         print('Tables initialized.')
@@ -53,37 +54,21 @@ class NewsDatabase:
                       created_date,
                       company_name,
                       address,
-                      hash) VALUES (?, ?, ?, ?, ?, ?);''',
+                      icon_url,
+                      hash) VALUES (?, ?, ?, ?, ?, ?, ?);''',
                 (
                     news_post_obj.title,
                     news_post_obj.content,
                     news_post_obj.created_date.strftime(news_post.DATE_FORMAT),
                     news_post_obj.company_name,
                     news_post_obj.address,
+                    news_post_obj.icon_url,
                     news_post_obj.create_hash()
                 )
             )
             self.db_conn.commit()
         except Exception as err:
             print('Query failed while trying to insert news post: %s, \nError: %s' % news_post_obj, err)
-
-    """
-    Stores a list of news post objects.
-    """
-    def store_many_news_posts(self, posts):
-        try:
-            self.cursor.executemany(
-                '''INSERT INTO news_posts(
-                      title,
-                      content,
-                      created_date,
-                      company_name,
-                      address) VALUES (?, ?, ?, ?, ?);''',
-                posts
-            )
-            self.db_conn.commit()
-        except Exception as err:
-            print('Query failed while trying to insert many posts: %s, \nError: %s' % posts, err)
 
     """
     Retrieves a list of the first 'count' posts that contain the given keywords, if they are provided.

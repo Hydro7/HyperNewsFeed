@@ -17,12 +17,13 @@ class NewsPost:
     """
     Initialize the news post with all fields needed to complete the object.
     """
-    def __init__(self, title, content, created_date, company_name, address):
+    def __init__(self, title, content, created_date, company_name, address, icon_url):
         self.title = title
         self.created_date = created_date
         self.company_name = company_name
         self.address = address
         self.content = content
+        self.icon_url = icon_url
 
     """
     Returns a json object representing a news post.
@@ -33,7 +34,8 @@ class NewsPost:
             'content':      self.content,
             'created_date': self.created_date.strftime(DATE_FORMAT),
             'company_name': self.company_name,
-            'address':      self.address
+            'address':      self.address,
+            'icon_url':     self.icon_url
         }
         return json_obj
 
@@ -48,7 +50,8 @@ class NewsPost:
             json_obj['content'],
             dt.strptime(json_obj['created_date'], DATE_FORMAT),
             json_obj['company_name'],
-            json_obj['address']
+            json_obj['address'],
+            json_obj['icon_url']
         )
 
     """
@@ -57,11 +60,12 @@ class NewsPost:
     @staticmethod
     def from_sqlite3_row(row):
         return NewsPost(
-            row[1],
-            row[2],
-            dt.strptime(row[3], DATE_FORMAT),
-            row[4],
-            row[5]
+            row[1],  # title
+            row[2],  # content
+            dt.strptime(row[3], DATE_FORMAT),  # datetime
+            row[4],  # company_name
+            row[5],  # address
+            row[6]   # icon_url
         )
 
     """

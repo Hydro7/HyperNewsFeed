@@ -8,7 +8,7 @@ from database.news_database import NewsDatabase
 db = NewsDatabase('database/prod.db')
 
 
-def url_crawler(url, company, address):
+def url_crawler(url, company, address, icon_url):
     try:
         res = urllib.request.urlopen(url, )
         soup = BeautifulSoup(res.read(), "html.parser")
@@ -17,12 +17,12 @@ def url_crawler(url, company, address):
             #print(l)
             if(l):
                 if('nieuws' in l or 'Nieuws' in l or 'news' in l or 'News' in l):
-                    article_crawler(l, company, address)
+                    article_crawler(l, company, address, icon_url)
     except:
         pass
 
 
-def article_crawler(url, company, address):
+def article_crawler(url, company, address, icon_url):
     try:
         res = urllib.request.urlopen(url)
         soup = BeautifulSoup(res.read(), "html.parser")
@@ -35,8 +35,7 @@ def article_crawler(url, company, address):
                     max1 = size
                     paragraph = p.text
         if paragraph != 0:
-            print(paragraph)
-            np = NewsPost('blah', paragraph, datetime.now(), company, address)
+            np = NewsPost('blah', paragraph, datetime.now(), company, address, icon_url)
             db.store_news_post(np)
             print('Saved news post.')
     except:
