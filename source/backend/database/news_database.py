@@ -39,22 +39,27 @@ class NewsDatabase:
     """
     Stores a news post into the database.
     """
-    def store_news_post(self, news_post):
-        self.cursor.execute(
-            '''INSERT INTO news_posts(
-                  title,
-                  content,
-                  created_date,
-                  company_name,
-                  address) VALUES (?, ?, ?, ?, ?);''',
-            (
-                news_post.title,
-                news_post.content,
-                news_post.created_date,
-                news_post.company_name,
-                news_post.address
+    def store_news_post(self, news_post_obj):
+        try:
+            self.cursor.execute(
+                '''INSERT INTO news_posts(
+                      title,
+                      content,
+                      created_date,
+                      company_name,
+                      address) VALUES (?, ?, ?, ?, ?);''',
+                (
+                    news_post_obj.title,
+                    news_post_obj.content,
+                    news_post_obj.created_date.strftime(news_post.DATE_FORMAT),
+                    news_post_obj.company_name,
+                    news_post_obj.address
+                )
             )
-        )
+            self.db_conn.commit()
+        except Exception as err:
+            print('Query failed while trying to insert news post: %s, \nError: %s' % news_post_obj, err)
+
 
 
 db = NewsDatabase()
