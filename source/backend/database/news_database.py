@@ -6,6 +6,7 @@ Database Connection.
 Functions in this file are used for interacting with a database of news posts.
 """
 
+
 class NewsDatabase:
 
     """
@@ -15,11 +16,10 @@ class NewsDatabase:
     def __init__(self):
         self.db_conn = sqlite3.connect('news_database.db', 3.0)
         self.cursor = self.db_conn.cursor()
-        self.initializeTables()
-
+        self.initialize_tables()
 
     """
     Ensures that all tables in the database exist, and if not, creates them.
     """
-    def initializeTables(self):
-        
+    def initialize_tables(self):
+        pass
