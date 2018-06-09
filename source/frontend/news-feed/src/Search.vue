@@ -12,6 +12,14 @@
             </b-autocomplete>
         </b-field>
       <br></br>
+      <section>
+
+        <button class="button is-medium is-success" @click="getNews()">
+            Refresh News
+        </button>
+
+    </section>
+    <br></br>
       <news-collection-list :newsList='newsList'></news-collection-list>
     </section>
 </template>
@@ -27,7 +35,7 @@
                 ],
                 name: '',
                 selected: null,
-                newsList: [{content: "Hello this is some news."}, {content: "Hello - MORE NEWS"}]
+                newsList: [],
             }
         },
         methods: {
@@ -37,6 +45,11 @@
             .then(function (response) {
                 console.log(response.data)
                 cmp.newsList = response.data
+                cmp.$toast.open({
+                    message: 'Newest news fetched successfully!',
+                    type: 'is-success',
+                    position: 'is-bottom',
+                })
               })
               .catch(function (error) {
                 console.log(error);

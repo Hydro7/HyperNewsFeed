@@ -2,7 +2,7 @@
   <article class="media">
   <figure class="media-left">
     <p class="image is-64x64">
-      <img src="src/assets/n.png">
+      <img :src="getImage">
     </p>
   </figure>
   <div class="media-content">
@@ -28,7 +28,6 @@
     </nav>
   </div>
   <div class="media-right">
-    <button class="delete"></button>
   </div>
 </article>
 </template>
@@ -42,6 +41,12 @@ export default {
     },
     getDate() {
       return this.newsData.created_date;
+    },
+    getImage() {
+      if (this.newsData.icon_url == ""){
+        return "src/assets/n.png";
+      }
+      return this.newsData.icon_url;
     }
   }
 }
