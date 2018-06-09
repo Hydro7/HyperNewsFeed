@@ -1,0 +1,27 @@
+sudo: false
+language: python
+python:
+    - "3.5"
+
+#branches:
+#    only:
+#        - master
+#        - develop
+
+install:
+    - pip install -r source/backend/requirements.txt
+    - cd source/backend
+    - pip install pipenv
+    - export FLASK_APP=app.py
+    - export FLASK_ENV=development
+    - cd ../../
+
+script:
+    - cd source/backend
+    - pipenv run pytest
+    
+after_failure:
+    echo "Broken."
+
+after_script:
+    echo "Cleanup."
