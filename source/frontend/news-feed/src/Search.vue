@@ -18,6 +18,7 @@
 
 <script>
     import NewsCollectionList from './NewsCollectionList.vue'
+    import axios from 'axios';
     export default {
         data() {
             return {
@@ -28,6 +29,19 @@
                 selected: null,
                 newsList: [{content: "Hello this is some news."}, {content: "Hello - MORE NEWS"}]
             }
+        },
+        methods: {
+          getNews() {
+            let cmp = this;
+            axios.get('http://localhost:5000/', {'timeout': 5000})
+            .then(function (response) {
+                console.log(response.data)
+                cmp.newsList = response.data
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+          }
         },
         computed: {
             filteredDataArray() {
@@ -41,6 +55,9 @@
         },
         components: {
           'news-collection-list': NewsCollectionList
+        },
+        created(){
+          this.getNews()
         }
     }
 </script>
