@@ -1,10 +1,10 @@
 import csv
-from source.backend.models import company
+from models import company
 
 def get_data_set ():
     data_set = []
     i = 0
-    with open('../data/dataset.csv') as csvfile:
+    with open('data/dataset.csv') as csvfile:
         reader = csv.reader(csvfile, delimiter=',')
         for row in reader:
             if i != 0:

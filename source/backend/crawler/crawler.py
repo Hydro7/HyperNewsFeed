@@ -1,8 +1,7 @@
 from bs4 import BeautifulSoup
 import urllib.request
-from source.backend.dataInterperter import get_data_set
 
-def urlCrawler(url):
+def url_crawler(url):
     try:
         res = urllib.request.urlopen(url)
         soup = BeautifulSoup(res.read(), "html.parser")
@@ -11,12 +10,12 @@ def urlCrawler(url):
             #print(l)
             if(l):
                 if('nieuws' in l or 'Nieuws' in l or 'news' in l or 'News' in l):
-                    articleCrawler(l)
+                    article_crawler(l)
     except:
         pass
 
 
-def articleCrawler(url):
+def article_crawler(url):
     try:
         res = urllib.request.urlopen(url)
         soup = BeautifulSoup(res.read(), "html.parser")
@@ -34,16 +33,3 @@ def articleCrawler(url):
     except:
         pass
 
-
-list = get_data_set()
-for i in list:
-    sub = ""
-    if i.subdomain:
-        sub = i.subdomain + "."
-    if i.SSL_certificate == "Yes":
-        #print ("https://" + sub + i.domain)
-        urlCrawler("https://" + sub + i.domain)
-    else:
-        #print("http://" + sub + i.domain)
-        urlCrawler("http://" + sub + i.domain)
-#print(parsed_html.body.find('div', attrs={'class':'container'}).text)

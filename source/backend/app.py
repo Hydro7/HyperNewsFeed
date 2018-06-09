@@ -1,8 +1,8 @@
 from flask import Flask
 from flask_restful import Api, Resource
 
-from source.backend.database.news_database import NewsDatabase
-from source.backend.endpoints.news_posts_resource import NewsPosts
+from database.news_database import NewsDatabase
+from endpoints.news_posts_resource import NewsPosts
 
 app = Flask(__name__)
 api = Api(app)

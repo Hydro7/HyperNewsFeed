@@ -1,5 +1,5 @@
 import sqlite3
-from source.backend.database import news_post
+from database import news_post
 
 """
 Database Connection.
