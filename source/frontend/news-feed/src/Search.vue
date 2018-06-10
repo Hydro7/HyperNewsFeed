@@ -54,6 +54,23 @@
               .catch(function (error) {
                 console.log(error);
               });
+          },
+          search() {
+            let cmp = this;
+            console.log(this.name);
+            axios.get('http://localhost:5000/search/' + this.name, {'timeout': 5000})
+            .then(function (response) {
+                console.log(response.data)
+                cmp.newsList = response.data
+                cmp.$toast.open({
+                    message: 'Newest news fetched successfully!',
+                    type: 'is-success',
+                    position: 'is-bottom',
+                })
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
           }
         },
         computed: {
@@ -71,6 +88,12 @@
         },
         created(){
           this.getNews()
+        },
+        watch: {
+          name(newValue,oldValue) {
+            console.log("Searching...");
+            this.search();
+          }
         }
     }
 </script>
