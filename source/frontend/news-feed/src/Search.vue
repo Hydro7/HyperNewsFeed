@@ -12,12 +12,21 @@
             </b-autocomplete>
         </b-field>
       <br></br>
+      <section>
+
+        <button class="button is-medium is-success" @click="getNews()">
+            Refresh News
+        </button>
+
+    </section>
+    <br></br>
       <news-collection-list :newsList='newsList'></news-collection-list>
     </section>
 </template>
 
 <script>
     import NewsCollectionList from './NewsCollectionList.vue'
+    import axios from 'axios';
     export default {
         data() {
             return {
@@ -26,8 +35,43 @@
                 ],
                 name: '',
                 selected: null,
-                newsList: [{content: "Hello this is some news."}, {content: "Hello - MORE NEWS"}]
+                newsList: [],
             }
+        },
+        methods: {
+          getNews() {
+            let cmp = this;
+            axios.get('http://localhost:5000/', {'timeout': 5000})
+            .then(function (response) {
+                console.log(response.data)
+                cmp.newsList = response.data
+                cmp.$toast.open({
+                    message: 'Newest news fetched successfully!',
+                    type: 'is-success',
+                    position: 'is-bottom',
+                })
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+          },
+          search() {
+            let cmp = this;
+            console.log(this.name);
+            axios.get('http://localhost:5000/search/' + this.name, {'timeout': 5000})
+            .then(function (response) {
+                console.log(response.data)
+                cmp.newsList = response.data
+                cmp.$toast.open({
+                    message: 'Newest news fetched successfully!',
+                    type: 'is-success',
+                    position: 'is-bottom',
+                })
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+          }
         },
         computed: {
             filteredDataArray() {
@@ -41,6 +85,15 @@
         },
         components: {
           'news-collection-list': NewsCollectionList
+        },
+        created(){
+          this.getNews()
+        },
+        watch: {
+          name(newValue,oldValue) {
+            console.log("Searching...");
+            this.search();
+          }
         }
     }
 </script>
