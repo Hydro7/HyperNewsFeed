@@ -8,7 +8,7 @@
   <div class="media-content">
     <div class="content">
       <p>
-        <strong>News Title Here</strong> <small>{{getDate}}</small>
+        <strong>{{getTitle}}</strong> <small>{{getDate}}</small>
         <br>
         {{getNews}}
       </p>
@@ -43,10 +43,13 @@ export default {
       return this.newsData.created_date;
     },
     getImage() {
-      if (this.newsData.icon_url == ""){
+      if (this.newsData.icon_url == ""){  
         return "src/assets/n.png";
       }
       return this.newsData.icon_url;
+    },
+    getTitle() {
+      return this.newsData.title + " - " + this.newsData.company_name;
     }
   }
 }

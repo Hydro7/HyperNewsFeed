@@ -53,7 +53,7 @@ def article_crawler(url, company, address, icon_url):
                     reached = 1
                     cnt = 0
             if not title:
-                temp_title = "NULL"
+                temp_title = ""
             print(temp_title)
             np = NewsPost(temp_title, par.text, datetime.now(), company, address, icon_url)
             db.store_news_post(np)
